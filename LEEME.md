@@ -39,7 +39,7 @@ Todo el procesamiento se realiza de manera **100% local y offline**: ningún cua
 - **Claridad & Micro-contraste (Unsharp Masking multicapa)**: Añade profundidad perceptual y volumen tridimensional entre los objetos en primer plano y el fondo.
 - **Denoise Espacio-Temporal Inteligente**: Algoritmo `hqdn3d` adaptativo que limpia el ruido en zonas homogéneas preservando los detalles estáticos y en movimiento.
 - **De-banding de Alta Precisión (`gradfun`)**: Elimina el efecto de bandas en degradados sutiles, cielos y sombras sin destruir la nitidez de la toma.
-- **Realce Tonal y Perceptual HDR**: Expansión dinámica del color y contraste con preservación estricta de tonos de piel humana.
+- **Realce Tonal y Contraste Adaptativo**: Ajuste dinámico de contraste, saturación y gamma (filtro `eq`) para revitalizar el color y corregir tomas lavadas o descoloridas.
 
 ### 2. 7 Perfiles Preconfigurados (Presets)
 1. **🌟 Universal / Equilibrado (Cámaras, Smartphones, Web)**: El perfil estándar todoterreno. Equilibrio perfecto entre nitidez, limpieza y fidelidad para cualquier clip común.
@@ -91,8 +91,8 @@ OmniBoost Studio detecta automáticamente la orientación del archivo original:
 
 ## 📁 Formatos Soportados
 
-- **Formatos de Entrada**: `.mp4`, `.mov`, `.mkv`, `.avi`, `.webm`, `.flv`, `.ts`, `.m4v`, `.mpg`, `.mpeg`.
-- **Formato de Salida**: Contenedor `.mp4` universal codificado en H.264 / H.265 con audio estéreo AAC a 320 kbps sin pérdida audible.
+- **Formatos de Entrada**: Videos en `.mp4`, `.mov`, `.mkv`, `.avi`, `.webm` e imágenes en `.png`, `.jpg`, `.jpeg`, `.webp`.
+- **Formato de Salida**: Conserva el contenedor original con su audio preservado bit por bit (`-c:a copy`) sin pérdida, organizando los archivos procesados en subcarpetas dedicadas (`Videos_Boosted/`, `Videos_2K_Boosted/`, `Videos_4K_Boosted/`). En caso de falla del codificador de GPU seleccionado, realiza un fallback automático por software con CPU.
 - **Nombres de archivo**: Por defecto añade el sufijo `_boosted.mp4` para no sobreescribir tu video original, permitiéndote además renombrarlo si lo deseás.
 
 ---

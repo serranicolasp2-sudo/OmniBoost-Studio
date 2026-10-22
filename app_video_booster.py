@@ -475,8 +475,15 @@ class VideoBoosterApp:
                     k, v = l.split("=", 1)
                     data[k] = v
 
-            width = data.get("width", "?")
-            height = data.get("height", "?")
+            try:
+                width = int(data.get("width", 0))
+            except (ValueError, TypeError):
+                width = 0
+
+            try:
+                height = int(data.get("height", 0))
+            except (ValueError, TypeError):
+                height = 0
             duration_val = float(data.get("duration", 0))
             is_video = duration_val > 0.1 or Path(file_path).suffix.lower() in {".mp4", ".mov", ".mkv", ".avi", ".webm"}
 
@@ -526,13 +533,13 @@ class VideoBoosterApp:
         elif "2160x3840" in res_choice:
             filters.append("scale=-2:3840:flags=lanczos+accurate_rnd+full_chroma_int")
         elif "4K Ultra HD" in res_choice:
-            filters.append("scale=3840:2160:flags=lanczos+accurate_rnd+full_chroma_int")
+            filters.append("scale=3840:2160:force_original_aspect_ratio=decrease:flags=lanczos+accurate_rnd+full_chroma_int,pad=3840:2160:(ow-iw)/2:(oh-ih)/2")
         elif "4K Cinema" in res_choice:
-            filters.append("scale=4096:2160:flags=lanczos+accurate_rnd+full_chroma_int")
+            filters.append("scale=4096:2160:force_original_aspect_ratio=decrease:flags=lanczos+accurate_rnd+full_chroma_int,pad=4096:2160:(ow-iw)/2:(oh-ih)/2")
         elif "2K" in res_choice:
-            filters.append("scale=2560:1440:flags=lanczos+accurate_rnd+full_chroma_int")
+            filters.append("scale=2560:1440:force_original_aspect_ratio=decrease:flags=lanczos+accurate_rnd+full_chroma_int,pad=2560:1440:(ow-iw)/2:(oh-ih)/2")
         elif "1080p" in res_choice:
-            filters.append("scale=1920:1080:flags=lanczos+accurate_rnd+full_chroma_int")
+            filters.append("scale=1920:1080:force_original_aspect_ratio=decrease:flags=lanczos+accurate_rnd+full_chroma_int,pad=1920:1080:(ow-iw)/2:(oh-ih)/2")
 
         if clarity > 0.05:
             amount = round(clarity * 0.9, 2)
